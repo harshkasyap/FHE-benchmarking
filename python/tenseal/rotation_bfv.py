@@ -29,6 +29,8 @@ context.generate_galois_keys()   # if you need rotations
 context.generate_relin_keys()    # if you need multiplications
 context.global_scale = 2**40
 
+rotation_steps = 100
+
 # -------------------------------
 # Data and Encryption
 # -------------------------------

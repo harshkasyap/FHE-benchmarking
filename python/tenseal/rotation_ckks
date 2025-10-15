@@ -1,0 +1,43 @@
+import tenseal as ts
+import time
+import numpy as np
+
+# -------------------------------
+# Parameters
+# -------------------------------
+n = 10**6
+poly_mod_degree = 32768
+coeff_mod_bit_sizes = [60, 40, 40, 60]
+scale = 2**40
+
+# -------------------------------
+# Context Setup
+# -------------------------------
+context = ts.context(
+    ts.SCHEME_TYPE.CKKS,          # scheme
+    poly_mod_degree,              # polynomial modulus degree
+    coeff_mod_bit_sizes           # coefficient modulus sizes
+)
+context.global_scale = scale
+context.generate_galois_keys()
+
+print("✅ CKKS context created and Galois keys generated.")
+
+# -------------------------------
+# Data and Encryption
+# -------------------------------
+data = np.random.randn(n).tolist()
+enc_vector = ts.ckks_vector(context, data)
+
+rotation_steps = 100
+print(f"\nTesting rotation with vector size {n} and rotation step {rotation_steps}")
+
+# Left rotation
+start = time.time()
+enc_rot_left = enc_vector.rotate_left(rotation_steps)
+print(f"⏱️ Left rotation time (CKKS): {time.time() - start:.4f} s")
+
+# Right rotation
+start = time.time()
+enc_rot_right = enc_vector.rotate_right(rotation_steps)
+print(f"⏱️ Right rotation time (CKKS): {time.time() - start:.4f} s")

@@ -36,7 +36,7 @@ ctx.global_scale = 2**40
 # Data preparation and chunking
 # -------------------------------
 data = np.random.randint(0, 100, size=n).tolist()
-chunks = [data[i:i + POLY_MODULUS_DEGREE] for i in range(0, n, POLY_MODULUS_DEGREE/2)]
+chunks = [data[i:i + POLY_MODULUS_DEGREE] for i in range(0, n, POLY_MODULUS_DEGREE)]
 print(f"Total chunks created: {len(chunks)}")
 
 # -------------------------------
